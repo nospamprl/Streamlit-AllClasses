@@ -95,6 +95,7 @@ if st.sidebar.button("📊 Predecir Precios"):
     
     # Display results
     st.write("### 📈 Depreciación proyectada a 5 Años (Tendencia Suavizada)")
+    results_df = results_df.reset_index()
     df_to_display = results_df.drop(columns=["Predicted Price (MXN)"]).rename(columns={
         "Age": "Plazo",
         "Smoothed Price": "Precio Suavizado (MXN)",
@@ -104,7 +105,6 @@ if st.sidebar.button("📊 Predecir Precios"):
         "% del Precio de Compra": "{:.2f}%"
     })
     
-    df_to_display = df_to_display.reset_index(drop=True)  # Elimina la columna de índice
     st.dataframe(df_to_display)
     
     # Plot results with trendline
