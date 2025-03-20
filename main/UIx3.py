@@ -17,9 +17,9 @@ asset_options = {
 
 # Streamlit UI
 st.set_page_config(page_title="Predicción de Precios", layout="centered")
-col1, col2 = st.columns([3, 1])
+col1 = st.columns([2, 1])
 with col1:
-    st.image("logo.png", width=300, align="center")
+    st.image("logo.png", use_container_width=True)
     st.title("🚜 Predicción de Precios de Equipos")
 st.markdown("### ¡Predice cómo cambia el valor de tu equipo con el tiempo!")
 
