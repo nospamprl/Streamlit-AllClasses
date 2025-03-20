@@ -15,6 +15,10 @@ asset_options = {
     "Construcción": {"model": "best_construction_model.pkl", "dataset": "Scrap Construction.xlsx"}
 }
 
+
+# Streamlit UI
+st.set_page_config(page_title="Predicción de Precios", layout="centered")
+
 # Logo display in the top left
 st.markdown(
     """
@@ -39,8 +43,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Streamlit UI
-st.set_page_config(page_title="Predicción de Precios", layout="centered")
+
+
+
 st.image("logo.png", use_container_width=True)
 st.title("🚜 Predicción de Precios de Equipos")
 st.markdown("### ¡Predice cómo cambia el valor de tu equipo con el tiempo!")
