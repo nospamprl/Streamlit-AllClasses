@@ -1,0 +1,9 @@
+pandas
+numpy
+matplotlib
+xgboost==2.1.4
+scikit-learn
+optuna
+torch
+openpyxl
+streamlit
