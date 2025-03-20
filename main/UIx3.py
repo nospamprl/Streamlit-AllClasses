@@ -20,23 +20,17 @@ asset_options = {
 st.set_page_config(page_title="Predicción de Precios", layout="centered")
 
 # Logo display in the top left
+
+# Custom CSS to set logo as a background watermark
 st.markdown(
     """
     <style>
-    [data-testid="stSidebarNav"] {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    [data-testid="stSidebarNav"]::before {
-        content: "";
-        display: block;
-        background-image: url('logo.png');
-        background-size: contain;
+    body {
+        background-image: url('logo.png'); /* Set logo as background */
+        background-size: 300px; /* Adjust size */
         background-repeat: no-repeat;
-        width: 150px;  /* Adjust width */
-        height: 60px;  /* Adjust height */
-        margin-bottom: 10px;
+        background-position: center;
+        opacity: 0.1; /* Make it a watermark */
     }
     </style>
     """,
@@ -46,7 +40,7 @@ st.markdown(
 
 
 
-st.image("logo.png", use_container_width=True)
+st.image("logo.png", width=200)
 st.title("🚜 Predicción de Precios de Equipos")
 st.markdown("### ¡Predice cómo cambia el valor de tu equipo con el tiempo!")
 
