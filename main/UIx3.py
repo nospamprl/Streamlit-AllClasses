@@ -31,10 +31,15 @@ type_selected = st.sidebar.selectbox("Selecciona el Tipo de Equipo", list(asset_
 data_path = asset_options[type_selected]["dataset"]
 df = pd.read_excel(data_path, sheet_name="Production")
 
+# Ensure categorical fields are strings and fill NaN values with empty strings
+df['Make'] = df['Make'].astype(str).fillna('')
+df['Model'] = df['Model'].astype(str).fillna('')
+df['Type'] = df['Type'].astype(str).fillna('')
+
 # Extract unique values for dropdowns and sort them
-makes = sorted(df['Make'].unique())
-models_by_make = {make: sorted(df[df['Make'] == make]['Model'].unique()) for make in makes}
-types_by_model = {model: sorted(df[df['Model'] == model]['Type'].unique()) for model in df['Model'].unique()}
+makes = sorted(df['Make'].dropna().unique())
+models_by_make = {make: sorted(df[df['Make'] == make]['Model'].dropna().unique()) for make in makes}
+types_by_model = {model: sorted(df[df['Model'] == model]['Type'].dropna().unique()) for model in df['Model'].unique()}
 
 # Sidebar for user input
 st.sidebar.header("🔍 Ingresar Detalles del Equipo")
