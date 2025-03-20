@@ -31,15 +31,13 @@ type_selected = st.sidebar.selectbox("Selecciona el Tipo de Equipo", list(asset_
 data_path = asset_options[type_selected]["dataset"]
 df = pd.read_excel(data_path, sheet_name="Production")
 
-# Ensure categorical fields are strings and fill NaN values with empty strings
-df['Make'] = df['Make'].astype(str).fillna('')
-df['Model'] = df['Model'].astype(str).fillna('')
-df['Type'] = df['Type'].astype(str).fillna('')
+# Create a simplified catalog
+df_catalog = df[['Make', 'Model', 'Type']].drop_duplicates().dropna()
 
 # Extract unique values for dropdowns and sort them
-makes = sorted(df['Make'].dropna().unique())
-models_by_make = {make: sorted(df[df['Make'] == make]['Model'].dropna().unique()) for make in makes}
-types_by_model = {model: sorted(df[df['Model'] == model]['Type'].dropna().unique()) for model in df['Model'].unique()}
+makes = sorted(df_catalog['Make'].dropna().unique())
+models_by_make = {make: sorted(df_catalog[df_catalog['Make'] == make]['Model'].dropna().unique()) for make in makes}
+types_by_model = {model: sorted(df_catalog[df_catalog['Model'] == model]['Type'].dropna().unique()) for model in df_catalog['Model'].unique()}
 
 # Sidebar for user input
 st.sidebar.header("🔍 Ingresar Detalles del Equipo")
@@ -51,14 +49,17 @@ yearly_usage = st.sidebar.number_input("🔄 Uso Anual (Horas/Millas)", min_valu
 purchase_price = st.sidebar.number_input("💰 Precio de Compra Actual (MXN)", min_value=0, value=100000, step=5000)
 exchange_rate = st.sidebar.number_input("💵 Tipo de Cambio", min_value=0.1, value=20.0, step=0.1)
 
-# Load the appropriate model
-model_path = asset_options[type_selected]["model"]
-with open(model_path, "rb") as f:
-    pipeline = pickle.load(f)
+# Load the appropriate model lazily
+@st.cache(allow_output_mutation=True)
+def load_model(model_path):
+    with open(model_path, "rb") as f:
+        pipeline = pickle.load(f)
+    if hasattr(pipeline.named_steps['model'], 'set_params'):
+        pipeline.named_steps['model'].set_params(device='cpu')
+    return pipeline
 
-# Ensure model runs on CPU only
-if hasattr(pipeline.named_steps['model'], 'set_params'):
-    pipeline.named_steps['model'].set_params(device='cpu')
+model_path = asset_options[type_selected]["model"]
+pipeline = load_model(model_path)
 
 if st.sidebar.button("📊 Predecir Precios"):
     st.subheader(f"📌 {selected_make}, {selected_model} ({selected_type})")
