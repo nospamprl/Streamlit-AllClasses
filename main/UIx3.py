@@ -103,6 +103,8 @@ if st.sidebar.button("📊 Predecir Precios"):
         "Precio Suavizado (MXN)": "{:,.2f}",
         "% del Precio de Compra": "{:.2f}%"
     })
+    
+    df_to_display = df_to_display.reset_index(drop=True)  # Elimina la columna de índice
     st.dataframe(df_to_display)
     
     # Plot results with trendline
@@ -117,11 +119,12 @@ if st.sidebar.button("📊 Predecir Precios"):
     ax1.set_ylabel("Precio (MXN)", color='tab:blue')
     ax1.tick_params(axis='y', labelcolor='tab:blue')
     ax1.legend()
-    ax1.yaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
+#    ax1.yaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
+    ax1.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: f'{x/1000:,.0f}k'))
     
     for i, txt in enumerate(results_df["Smoothed Price"]):
         percent_txt = results_df["% of Purchase Price"].iloc[i]
-        label_text = f"${txt:,.2f}\n({percent_txt:.2f}%)"
+        label_text = f"${txt/1000:,.1f}k\n({percent_txt:.2f}%)"
         ax1.annotate(label_text, (results_df["Age"].iloc[i], results_df["Smoothed Price"].iloc[i]), textcoords="offset points", xytext=(+60,5), ha='right', fontsize=9, color='blue', bbox=dict(facecolor='white', alpha=0.5, edgecolor='none'))
     
     fig.tight_layout()
