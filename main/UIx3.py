@@ -15,6 +15,30 @@ asset_options = {
     "Construcción": {"model": "best_construction_model.pkl", "dataset": "Scrap Construction.xlsx"}
 }
 
+# Logo display in the top left
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebarNav"] {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    [data-testid="stSidebarNav"]::before {
+        content: "";
+        display: block;
+        background-image: url('logo.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 150px;  /* Adjust width */
+        height: 60px;  /* Adjust height */
+        margin-bottom: 10px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Streamlit UI
 st.set_page_config(page_title="Predicción de Precios", layout="centered")
 st.image("logo.png", use_container_width=True)
@@ -97,7 +121,8 @@ if st.sidebar.button("📊 Predecir Precios"):
         "Smoothed Price": "Precio Suavizado (MXN)",
         "% of Purchase Price": "% del Precio de Compra"
     })
-    st.write(df_to_display.columns)
+    df_to_display = df_to_display.loc[:, ~df.columns.str.contains('^Unnamed|^0$', na=False)]
+
     df_to_display = df_to_display.reset_index(drop=True)
     df_to_display = df_to_display.style.format({
         "Precio Suavizado (MXN)": "{:,.2f}",
