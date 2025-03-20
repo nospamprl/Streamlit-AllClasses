@@ -102,7 +102,7 @@ if st.sidebar.button("📊 Predecir Precios"):
         "Smoothed Price": "Precio Suavizado (MXN)",
         "% of Purchase Price": "% del Precio de Compra"
     })
-    df_to_display = df_to_display.loc[:, ~df.columns.str.contains('^Unnamed|^0$', na=False)]
+    df_to_display = df_to_display.loc[:, ~df_to_display.columns.str.contains('^Unnamed|^0$', na=False)]
 
     df_to_display = df_to_display.reset_index(drop=True)
     df_to_display = df_to_display.style.format({
