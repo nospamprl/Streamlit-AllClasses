@@ -96,6 +96,7 @@ if st.sidebar.button("📊 Predecir Precios"):
     # Display results
     st.write("### 📈 Depreciación proyectada a 5 Años (Tendencia Suavizada)")
     df_to_display = results_df.drop(columns=["Predicted Price (MXN)"]).rename(columns={
+        "Age": "Plazo",
         "Smoothed Price": "Precio Suavizado (MXN)",
         "% of Purchase Price": "% del Precio de Compra"
     }).style.format({
@@ -120,7 +121,7 @@ if st.sidebar.button("📊 Predecir Precios"):
     
     for i, txt in enumerate(results_df["Smoothed Price"]):
         percent_txt = results_df["% of Purchase Price"].iloc[i]
-        label_text = fr"${txt:,.2f}\n({percent_txt:.2f}%)"
+        label_text = f"${txt:,.2f}\n({percent_txt:.2f}%)"
         ax1.annotate(label_text, (results_df["Age"].iloc[i], results_df["Smoothed Price"].iloc[i]), textcoords="offset points", xytext=(+60,5), ha='right', fontsize=9, color='blue', bbox=dict(facecolor='white', alpha=0.5, edgecolor='none'))
     
     fig.tight_layout()
