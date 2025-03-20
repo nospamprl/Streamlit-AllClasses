@@ -50,12 +50,12 @@ purchase_price = st.sidebar.number_input("💰 Precio de Compra Actual (MXN)", m
 exchange_rate = st.sidebar.number_input("💵 Tipo de Cambio", min_value=0.1, value=20.0, step=0.1)
 
 # Load the appropriate model lazily
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def load_model(model_path):
     with open(model_path, "rb") as f:
         pipeline = pickle.load(f)
-    if hasattr(pipeline.named_steps['model'], 'set_params'):
-        pipeline.named_steps['model'].set_params(device='cpu')
+    if hasattr(pipeline.named_steps.get('model', {}), 'set_params'):
+        pipeline.named_steps['model'].set_params(tree_method="hist", device="cpu")
     return pipeline
 
 model_path = asset_options[type_selected]["model"]
@@ -120,7 +120,7 @@ if st.sidebar.button("📊 Predecir Precios"):
     
     for i, txt in enumerate(results_df["Smoothed Price"]):
         percent_txt = results_df["% of Purchase Price"].iloc[i]
-        label_text = f"\${txt:,.2f}\n({percent_txt:.2f}%)"
+        label_text = fr"${txt:,.2f}\n({percent_txt:.2f}%)"
         ax1.annotate(label_text, (results_df["Age"].iloc[i], results_df["Smoothed Price"].iloc[i]), textcoords="offset points", xytext=(+60,5), ha='right', fontsize=9, color='blue', bbox=dict(facecolor='white', alpha=0.5, edgecolor='none'))
     
     fig.tight_layout()
