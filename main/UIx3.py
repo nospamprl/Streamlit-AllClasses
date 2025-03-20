@@ -19,9 +19,8 @@ asset_options = {
 st.set_page_config(page_title="Predicción de Precios", layout="centered")
 col1, col2 = st.columns([3, 1])
 with col1:
+    st.image("logo.png", width=300)
     st.title("🚜 Predicción de Precios de Equipos")
-with col2:
-    st.image("logo.png", width=100)
 st.markdown("### ¡Predice cómo cambia el valor de tu equipo con el tiempo!")
 
 # Select asset class
@@ -100,7 +99,7 @@ if st.sidebar.button("📊 Predecir Precios"):
         "Smoothed Price": "Precio Suavizado (MXN)",
         "% of Purchase Price": "% del Precio de Compra"
     })
-    df_to_display = df_to_display.reset_index()
+    df_to_display = df_to_display.reset_index(drop=True)
     df_to_display = df_to_display.style.format({
         "Precio Suavizado (MXN)": "{:,.2f}",
         "% del Precio de Compra": "{:.2f}%"
