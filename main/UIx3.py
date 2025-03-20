@@ -21,24 +21,6 @@ st.set_page_config(page_title="Predicción de Precios", layout="centered")
 
 # Logo display in the top left
 
-# Custom CSS to set logo as a background watermark
-st.markdown(
-    """
-    <style>
-    body {
-        background-image: url('logo.png'); /* Set logo as background */
-        background-size: 300px; /* Adjust size */
-        background-repeat: no-repeat;
-        background-position: center;
-        opacity: 0.1; /* Make it a watermark */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-
-
 
 st.image("logo.png", width=200)
 st.title("🚜 Predicción de Precios de Equipos")
