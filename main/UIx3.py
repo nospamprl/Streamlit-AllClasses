@@ -101,7 +101,7 @@ if st.sidebar.button("📊 Predecir Precios"):
         "% of Purchase Price": "% del Precio de Compra"
     })
     df_todisplay = df_todisplay.reset_index()
-    df_todisplay = df_todisplay..style.format({
+    df_todisplay = df_todisplay.style.format({
         "Precio Suavizado (MXN)": "{:,.2f}",
         "% del Precio de Compra": "{:.2f}%"
     })
