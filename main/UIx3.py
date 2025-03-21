@@ -108,7 +108,7 @@ if st.sidebar.button("📊 Predecir Precios"):
     df_to_display = df_to_display.style.format({
         "Precio Suavizado (MXN)": "{:,.2f}",
         "% del Precio de Compra": "{:.2f}%"
-    }).hide(axis="index")  # Encadenar el método para ocultar el índice
+    }).hide(axis="(index)")  # Encadenar el método para ocultar el índice
 
 
 
