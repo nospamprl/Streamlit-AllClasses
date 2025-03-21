@@ -94,6 +94,8 @@ if st.sidebar.button("📊 Predecir Precios"):
     results_df = pd.DataFrame(results, columns=["Age", "Predicted Price (MXN)"])
     results_df["Smoothed Price"] = results_df["Predicted Price (MXN)"].ewm(span=3, adjust=False).mean()
     results_df["% of Purchase Price"] = (results_df["Smoothed Price"] / purchase_price) * 100
+
+    st.dataframe(results_df)
     
     # Display results
     st.write("### 📈 Depreciación proyectada a 5 Años (Tendencia Suavizada)")
