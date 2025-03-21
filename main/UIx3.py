@@ -94,11 +94,6 @@ if st.sidebar.button("📊 Predecir Precios"):
     results_df = pd.DataFrame(results, columns=["Age", "Predicted Price (MXN)"])
 
 
-    st.write(results_df.index)  # Verifica el tipo de índice
-
-    st.dataframe(results_df)
- 
-
     results_df["Smoothed Price"] = results_df["Predicted Price (MXN)"].ewm(span=3, adjust=False).mean()
     results_df["% of Purchase Price"] = (results_df["Smoothed Price"] / purchase_price) * 100
 
@@ -113,16 +108,16 @@ if st.sidebar.button("📊 Predecir Precios"):
 
 #    df_to_display = df_to_display.drop(df_to_display.columns[0], axis=1)  # Eliminar la primera columna
 
-    st.write(df_to_display)
-    st.write( df_to_display.index)
-    st.write( df_to_display.columns)
 
 
+    st.dataframe(df_to_display.style.hide(axis="index"))
+
+"""
     df_to_display = df_to_display.style.format({
         "Precio Suavizado (MXN)": "{:,.2f}",
         "% del Precio de Compra": "{:.2f}%"
     }).hide(axis="index")  # Encadenar el método para ocultar el índice
-
+""""
 
 
     st.dataframe(df_to_display)
