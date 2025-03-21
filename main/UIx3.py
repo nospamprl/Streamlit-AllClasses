@@ -106,20 +106,15 @@ if st.sidebar.button("📊 Predecir Precios"):
         "% of Purchase Price": "% del Precio de Compra"
     })
 
-#    df_to_display = df_to_display.drop(df_to_display.columns[0], axis=1)  # Eliminar la primera columna
-
-
-
-    st.dataframe(df_to_display,hide_index=True)
 
     df_to_display = df_to_display.style.format({
         "Precio Suavizado (MXN)": "{:,.2f}",
         "% del Precio de Compra": "{:.2f}%"
-    }).hide(axis="index")  # Encadenar el método para ocultar el índice
+    })
 
 
 
-    st.dataframe(df_to_display)
+    st.dataframe(df_to_display,hide_index=True)
     
     # Plot results with trendline
     fig, ax1 = plt.subplots(figsize=(8, 5))
