@@ -105,16 +105,16 @@ if st.sidebar.button("📊 Predecir Precios"):
 
     df_to_display = df_to_display.drop(df_to_display.columns[0], axis=1)  # Eliminar la primera columna
 
+    print(type(df_to_display))  # Verifica si df es un DataFrame
+    print(df_to_display.columns)
     df_to_display = df_to_display.reset_index(drop=True)
+    print(df_to_display.columns)
     df_to_display = df_to_display.style.format({
         "Precio Suavizado (MXN)": "{:,.2f}",
         "% del Precio de Compra": "{:.2f}%"
     })
 
 
-    print(type(df_to_display))  # Verifica si df es un DataFrame
-    print(df_to_display.columns)
-    df_to_display = df_to_display.reset_index(drop=True)  # Elimina la columna del índice  
     st.dataframe(df_to_display)
     
     # Plot results with trendline
