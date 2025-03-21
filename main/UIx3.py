@@ -115,6 +115,7 @@ if st.sidebar.button("📊 Predecir Precios"):
     })
 
 
+
     st.dataframe(df_to_display)
     
     # Plot results with trendline
