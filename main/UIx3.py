@@ -110,7 +110,7 @@ if st.sidebar.button("📊 Predecir Precios"):
 
 
 
-    st.dataframe(df_to_display.style.hide(axis="index"))
+    st.dataframe(df_to_display.style.hide(axis=""))
 
     """
     df_to_display = df_to_display.style.format({
