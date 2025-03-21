@@ -111,6 +111,7 @@ if st.sidebar.button("📊 Predecir Precios"):
         "% del Precio de Compra": "{:.2f}%"
     })
     
+    df_to_display = df_to_display.reset_index(drop=True)  # Elimina la columna del índice  
     st.dataframe(df_to_display)
     
     # Plot results with trendline
