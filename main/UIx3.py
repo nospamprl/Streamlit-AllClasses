@@ -103,12 +103,8 @@ if st.sidebar.button("📊 Predecir Precios"):
         "% of Purchase Price": "% del Precio de Compra"
     })
 
-    df_to_display = df_to_display.drop(df_to_display.columns[0], axis=1)  # Eliminar la primera columna
+#    df_to_display = df_to_display.drop(df_to_display.columns[0], axis=1)  # Eliminar la primera columna
 
-    print(type(df_to_display))  # Verifica si df es un DataFrame
-    print(df_to_display.columns)
-    df_to_display = df_to_display.reset_index(drop=True)
-    print(df_to_display.columns)
     df_to_display = df_to_display.style.format({
         "Precio Suavizado (MXN)": "{:,.2f}",
         "% del Precio de Compra": "{:.2f}%"
@@ -116,7 +112,7 @@ if st.sidebar.button("📊 Predecir Precios"):
 
 
 
-    st.dataframe(df_to_display)
+    st.dataframe(df_to_display.style.hide(axis="index"))
     
     # Plot results with trendline
     fig, ax1 = plt.subplots(figsize=(8, 5))
